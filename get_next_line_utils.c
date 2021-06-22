@@ -2,90 +2,97 @@
 
 size_t	ft_strlen(const char *s)
 {
-    size_t	i;
+	size_t	i;
 
-    i = 0;
-    while (s[i] != '\0')
-        i++;
-    return (i);
-}
-
-char	*ft_strchr(const char *s, int c)
-{
-    int	i;
-
-    i = 0;
-    while (s[i] != '\0')
-    {
-        if (s[i] == (unsigned char)c)
-            return ((char *)s + i);
-        i++;
-    }
-    if ((unsigned char)c == '\0')
-        return ((char *)s + i);
-    return (NULL);
+	i = 0;
+	while (s[i] != '\0')
+		i++;
+	return (i);
 }
 
 char	*ft_strdup(const char *s1)
 {
-    int		i;
-    int		n;
-    char	*str;
+	int		i;
+	int		n;
+	char	*str;
 
-    i = 0;
-    n = 0;
-    while (s1[i] != '\0')
-        i++;
-    str = (char *)malloc(sizeof(char) * (i + 1));
-    if (!str)
-        return (NULL);
-    while (s1[n] != '\0')
-    {
-        str[n] = s1[n];
-        n++;
-    }
-    str[n] = '\0';
-    return (str);
+	i = 0;
+	n = 0;
+	while (s1[i] != '\0')
+		i++;
+	str = (char *)malloc(sizeof(char) * (i + 1));
+	if (!str)
+		return (NULL);
+	while (s1[n] != '\0')
+	{
+		str[n] = s1[n];
+		n++;
+	}
+	str[n] = '\0';
+	return (str);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-    char	*str;
-    char	*res;
-    size_t	len;
+	char	*str;
+	size_t	i;
 
-    if (s1 == NULL || s2 == NULL)
-        return (NULL);
-    len = ft_strlen(s1) + ft_strlen(s2);
-    if ((str = (char *)malloc(len + 1)) == NULL)
-        return (NULL);
-    res = str;
-    while (*s1)
-    {
-        *str = *s1;
-        str++;
-        s1++;
-    }
-    while (*s2)
-    {
-        *str = *s2;
-        str++;
-        s2++;
-    }
-    *str = '\0';
-    return (res);
+	if (!s)
+		return (NULL);
+	if ((size_t)start > ft_strlen(s))
+		return (ft_strdup(""));
+	if (len > ft_strlen(s + start))
+		len = ft_strlen(s + start);
+	str = (char *)malloc(sizeof(char) * (len + 1));
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		str[i] = s[start + i];
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
 }
 
-char	*ft_strnew(size_t size)
+static char	*ft_copy1(char *s1, char *strnew)
 {
-    char *str;
+	size_t	i;
 
-    str = (char *)malloc(sizeof(char) * (size + 1));
-    if (str == NULL)
-        return (NULL);
-    while (size > 0)
-        str[size--] = '\0';
-    str[0] = '\0';
-    return (str);
+	i = 0;
+	while (s1[i] != '\0')
+	{
+		strnew[i] = s1[i];
+		i++;
+	}
+	free(s1);
+	s1 = NULL;
+	return (strnew);
 }
 
+char	*ft_strjoin(char *s1, char *s2)
+{
+	size_t	i;
+	size_t	j;
+	char	*strnew;
+
+	if (!s1)
+		return (ft_strdup(s2));
+	if (!s2)
+		return (NULL);
+	i = ft_strlen(s1);
+	j = ft_strlen(s2);
+	strnew = (char *)malloc(sizeof(char) * (i + j + 1));
+	if (!strnew)
+		return (NULL);
+	j = 0;
+	strnew = ft_copy1(s1, strnew);
+	while (s2[j] != '\0')
+	{
+		strnew[i + j] = s2[j];
+		j++;
+	}
+	strnew[i + j] = '\0';
+	return (strnew);
+}
