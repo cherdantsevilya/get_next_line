@@ -19,3 +19,7 @@ _May it be a file, stdin, or even later a network connection, you will always ne
 For detailed information, refer to the [**subject of this project**](https://github.com/CherdantsevIlya/gnl/blob/master/en.subject.pdf).
 
 ___
+
+## 🧨 **Tests**
++ [gnlTester](https://github.com/Tripouille/gnlTester)
++ [42TESTER-GNL](https://github.com/Mazoise/42TESTERS-GNL)
